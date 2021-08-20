@@ -1,7 +1,7 @@
 import React from "react";
 import { MaterialButton, MaterialInput, Modal } from "../MaterialUI";
 import { useSelector } from "react-redux";
-import { popperOffsets } from "../../../../admin-app/node_modules/@popperjs/core";
+
 /**
  * @author
  * @function Login

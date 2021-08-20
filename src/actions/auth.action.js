@@ -99,12 +99,12 @@ export const signOut = () => {
       type: authConstants.LOGOUT_REQUEST,
     });
     const res = await axios.post("/signout");
-
+    localStorage.clear();
     if (res.status === 200) {
       // localStorage.removeItem('user')
       // localStorage.removeItem('token')
       // localStorage.removeItem('cart')
-      localStorage.clear();
+    
       dispatch({
         type: authConstants.LOGOUT_SUCCESS,
       });

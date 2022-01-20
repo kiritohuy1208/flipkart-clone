@@ -1,6 +1,10 @@
 .FooterCtn {
   display: flex;
   background-color: black;
+  position: relative;
+  bottom: 0;
+  clear: both;
+  width: 100%;
 }
 .LeftCtn {
   flex: 1;

@@ -1,5 +1,7 @@
 import React from "react";
 import Layout from "../../components/Layout";
+import Newsletter from "../../components/UI/NewsLetter/Newsletter";
+import Slider from "../../components/UI/Slide/Slide";
 
 /**
  * @author
@@ -7,7 +9,12 @@ import Layout from "../../components/Layout";
  **/
 
 const HomePage = (props) => {
-  return <Layout></Layout>;
+  return (
+    <Layout>
+      <Slider />
+      <Newsletter />
+    </Layout>
+  );
 };
 
 export default HomePage;

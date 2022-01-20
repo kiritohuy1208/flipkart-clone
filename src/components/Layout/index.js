@@ -1,21 +1,22 @@
-import React from 'react'
-import Header from '../Header'
-import MenuHeader from '../MenuHeader'
+import React from "react";
+import Footer from "../Footer/Footer";
+import Header from "../Header";
+import MenuHeader from "../MenuHeader";
 
 /**
-* @author
-* @function Layout
-**/
+ * @author
+ * @function Layout
+ **/
 
 const Layout = (props) => {
-  return(
+  return (
     <>
-        <Header/>
-        <MenuHeader/>
-        {props.children}
+      <Header />
+      <MenuHeader />
+      {props.children}
+      <Footer />
     </>
-   )
+  );
+};
 
- }
-
-export default Layout
+export default Layout;

@@ -1,0 +1,77 @@
+.FooterCtn {
+  display: flex;
+  background-color: black;
+}
+.LeftCtn {
+  flex: 1;
+  flex-direction: column;
+  padding: 20px;
+}
+.LeftCtn .Logo {
+  color: #c9d4e6;
+  font-size: 3rem;
+}
+.LeftCtn .Desc {
+  color: white;
+  padding-right: 50px;
+  margin-top: 35px;
+}
+
+.LeftCtn .IconsSocial {
+  display: flex;
+
+  padding: 10px;
+}
+.LeftCtn .IconCtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  cursor: pointer;
+  background: white;
+  font-size: 2rem;
+}
+.CenterCtn {
+  flex: 1;
+
+  padding: 20px;
+}
+.CenterCtn h1 {
+  color: white;
+  margin-bottom: 30px;
+  padding: 0;
+}
+.CenterCtn ul {
+  list-style: none;
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+}
+.CenterCtn ul li {
+  width: 40%;
+  padding: 8px;
+  cursor: pointer;
+}
+.rightCtn {
+  flex: 1;
+  padding: 20px;
+}
+.rightCtn h1 {
+  color: white;
+  margin-bottom: 30px;
+}
+.rightCtn .ContactItem {
+  display: flex;
+  color: white;
+  margin-bottom: 10px;
+  align-items: center;
+}
+.rightCtn image {
+  width: 50%;
+}

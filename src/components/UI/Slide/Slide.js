@@ -1,26 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductPage } from "../../../actions";
 import getParams from "../../../utils/getParams";
-
-import ReactDOM from "react-dom";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { getProductPage } from "../../../actions";
 import { Carousel } from "react-responsive-carousel";
-
-import "./style.css";
 import Card from "../../../components/UI/Card/Card";
-/**
- * @author
- * @function ProductPage
- **/
-
-const ProductPage = (props) => {
+const Slider = (props) => {
   const dispatch = useDispatch();
   const product = useSelector((state) => state.product);
   const { page } = product;
   useEffect(() => {
-    const params = getParams(props.location.search);
-    console.log(params);
+    const params = { cid: "6102afd379e5290b389d497f", type: "page" };
     const payload = {
       params,
     };
@@ -38,7 +27,6 @@ const ProductPage = (props) => {
   );
   return (
     <div style={{ margin: "0px 10px" }}>
-      <h3>{page.title}</h3>
       {renderCarousel()}
       <div
         style={{
@@ -74,5 +62,4 @@ const ProductPage = (props) => {
     </div>
   );
 };
-
-export default ProductPage;
+export default Slider;

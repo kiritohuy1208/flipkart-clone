@@ -12,6 +12,7 @@ import "./style.css";
  **/
 
 const ProductListPage = (props) => {
+  console.log("propslistpage" + props.location.search);
   const renderProduct = () => {
     //location:
     // hash: ""

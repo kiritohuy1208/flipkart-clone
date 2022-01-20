@@ -1,0 +1,38 @@
+.ctnNewsletter {
+  height: 60vh;
+  margin-top: 10px;
+  background-color: #fcf5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.ctnNewsletter h1 {
+  font-size: 3rem;
+  color: black;
+}
+.ctnNewsletter span {
+  font-size: 2rem;
+  font-weight: 500;
+}
+.ctnNewsletter .inputCtn {
+  width: 50%;
+  background-color: white;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid gray;
+}
+.ctnNewsletter .inputCtn input {
+  flex: 8;
+  padding: 5px;
+  border: none;
+  font-size: 300;
+}
+.ctnNewsletter .inputCtn button {
+  flex: 2;
+  font-size: large;
+  background-color: #2874f0;
+  color: white;
+  border: none;
+}

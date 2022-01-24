@@ -16,6 +16,7 @@ const initialState = {
   page: {},
   error: null,
   productDetails: {},
+  comments: [],
 };
 const productReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -77,6 +78,57 @@ const productReducer = (state = initialState, action) => {
       break;
     }
     case productConstant.GET_PRODUCT_DETAILS_BY_ID_FAILURE: {
+      state = {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
+
+      break;
+    }
+    //-----------Create Comment------------
+    case productConstant.CREATE_COMMENT_PRODUCT_REQUEST: {
+      state = {
+        ...state,
+        loading: true,
+      };
+
+      break;
+    }
+    case productConstant.CREATE_COMMENT_PRODUCT_SUCCESS: {
+      state = {
+        ...state,
+        loading: false,
+      };
+
+      break;
+    }
+    case productConstant.CREATE_COMMENT_PRODUCT_ERROR: {
+      state = {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
+      break;
+    }
+    //-----------Get Comment ---------------
+    case productConstant.GET_COMMENT_PRODUCT_REQUEST: {
+      state = {
+        ...state,
+        loading: true,
+      };
+      break;
+    }
+    case productConstant.GET_COMMENT_PRODUCT_SUCCESS: {
+      state = {
+        ...state,
+        loading: false,
+        comments: action.payload.comments,
+      };
+
+      break;
+    }
+    case productConstant.GET_COMMENT_PRODUCT_FAILURE: {
       state = {
         ...state,
         loading: false,

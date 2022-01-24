@@ -1,18 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getProductDetailsById } from "../../actions";
+import {
+  addComment,
+  getComment,
+  getProductDetailsById,
+  login,
+  signUp,
+} from "../../actions";
 import { addToCart } from "../../actions/cart.action";
 import { generatePublicUrl } from "../../urlConfig";
 import Layout from "../../components/Layout";
 
-import { IoIosArrowForward, IoIosStar, IoMdCart } from "react-icons/io";
+import {
+  IoIosAdd,
+  IoIosArrowForward,
+  IoIosStar,
+  IoMdCart,
+} from "react-icons/io";
 import { AiFillThunderbolt, AiFillPayCircle } from "react-icons/ai";
 import { FaRegBookmark } from "react-icons/fa";
 import { MaterialButton } from "../../components/MaterialUI";
 
 import "./style.css";
 import NumberFormat from "react-number-format";
+import CardComment from "../../components/UI/CardComment/CardComment";
+import Login from "../../components/Login";
+import SignUp from "../../components/SignUp";
 
 /**
  * @author
@@ -22,21 +36,132 @@ import NumberFormat from "react-number-format";
 const ProductDetailsPage = (props) => {
   const dispatch = useDispatch();
   const product = useSelector((state) => state.product);
+  const auth = useSelector((state) => state.auth);
+  const { comments } = product;
+
+  //---------State
+  const [toggleAddComment, setToggleAddComment] = useState(false);
+  const [comment, setComment] = useState("");
+  const [imageState, setimageState] = useState(
+    product ? product.productDetails.productPictures : ""
+  );
+  // product.productDetails.productPictures[0].img
+  // login sign up
+  const [loginModal, setLoginModal] = useState(false);
+  const [signUpModal, setSignUpModal] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  //  use effect of login and sign up
+  useEffect(() => {
+    if (auth.authenticate) {
+      setLoginModal(false);
+    }
+  }, [auth.authenticate]);
+  useEffect(() => {
+    // if user is logging or singnup
+    if (!auth.authenticating) {
+      setEmail("");
+      setPassword("");
+      setLastName("");
+      setFirstName("");
+    }
+  }, [auth.authenticating]);
+
+  const userLogin = () => {
+    const user = {
+      email,
+      password,
+    };
+    dispatch(login(user)).then((result) => setLoginModal(false));
+  };
+
+  // -----------------------------
+  // sign up:
+  const userSignUp = () => {
+    const user = {
+      firstName,
+      lastName,
+      email,
+      password,
+    };
+    if (
+      firstName === "" ||
+      lastName === "" ||
+      email === "" ||
+      password === ""
+    ) {
+      return;
+    }
+    dispatch(signUp(user)).then((result) => setSignUpModal(false));
+  };
   useEffect(() => {
     const { productId } = props.match.params;
-    console.log("props.match.params", props.match.params);
     const payload = {
       params: {
         productId,
       },
     };
     dispatch(getProductDetailsById(payload));
+    dispatch(getComment(payload));
   }, []);
+
   // check use Object.keys because the property productdetails is object what has existed
   if (Object.keys(product.productDetails).length === 0) return null;
-  console.log("props.history", props.history);
+  const handleSubmitComment = () => {
+    if (auth.authenticate) {
+      if (comment) {
+        const { productId } = props.match.params;
+        const payload = {
+          productId,
+          comment,
+        };
+        dispatch(addComment(payload)).then(() => {
+          setToggleAddComment(false);
+          setComment("");
+        });
+      } else {
+        return;
+      }
+    } else {
+      setSignUpModal(false);
+      setLoginModal(true);
+    }
+  };
   return (
     <Layout>
+      <Login
+        email={email}
+        onChangeEmail={(e) => setEmail(e.target.value)}
+        password={password}
+        onChangePassword={(e) => setPassword(e.target.value)}
+        onClick={() => {
+          setLoginModal(false);
+          setSignUpModal(true);
+        }}
+        onUserLogin={userLogin}
+        loginModal={loginModal}
+        onClose={() => setLoginModal(false)}
+      />
+      <SignUp
+        firstName={firstName}
+        onChangeFirstName={(e) => setFirstName(e.target.value)}
+        lastName={lastName}
+        onChangeLastName={(e) => setLastName(e.target.value)}
+        email={email}
+        onChangeEmail={(e) => setEmail(e.target.value)}
+        password={password}
+        onChangePassword={(e) => setPassword(e.target.value)}
+        onClick={() => {
+          setLoginModal(true);
+          setSignUpModal(false);
+        }}
+        onUserSignUp={userSignUp}
+        signUpModal={signUpModal}
+        onClose={() => setSignUpModal(false)}
+      />
+
       <div className="productDescriptionContainer">
         <div className="flexRow">
           {/* left part */}
@@ -100,7 +225,7 @@ const ProductDetailsPage = (props) => {
           {/* center part end */}
         </div>
         {/* rigth part */}
-        <div>
+        <div style={{ marginLeft: "85vh" }}>
           {/* breadcum */}
           <div className="breed">
             <ul>
@@ -202,6 +327,39 @@ const ProductDetailsPage = (props) => {
                   {product.productDetails.description}
                 </span>
               </p>
+            </div>
+            <div className="Comments">
+              <h1>Ratings and Reviews</h1>
+              {toggleAddComment ? null : (
+                <button onClick={() => setToggleAddComment(!toggleAddComment)}>
+                  Add Review of you at here
+                </button>
+              )}
+
+              {toggleAddComment && (
+                <div className="AddCommentCtn">
+                  <textarea
+                    onChange={(e) => setComment(e.target.value)}
+                    placeholder="Add comment here"
+                  ></textarea>
+                  <div className="ButtonCtn">
+                    <button onClick={handleSubmitComment}>Submit</button>
+                    <button
+                      style={{ backgroundColor: "red", marginLeft: "10px" }}
+                      onClick={() => setToggleAddComment(!toggleAddComment)}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              )}
+              {comments.review &&
+                comments.review.map((r) => (
+                  <CardComment
+                    comment={r.review}
+                    userName={r.userId.firstName + " " + r.userId.lastName}
+                  ></CardComment>
+                ))}
             </div>
           </div>
         </div>

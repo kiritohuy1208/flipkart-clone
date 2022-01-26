@@ -34,6 +34,7 @@ const Header = (props) => {
   useEffect(() => {
     if (auth.authenticate) {
       setLoginModal(false);
+      setSignUpModal(false);
     }
   }, [auth.authenticate]);
   useEffect(() => {
